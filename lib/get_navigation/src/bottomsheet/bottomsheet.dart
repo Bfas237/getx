@@ -69,7 +69,7 @@ class GetModalBottomSheetRoute<T> extends PopupRoute<T> {
       Animation<double> secondaryAnimation) {
     final sheetTheme =
         theme?.bottomSheetTheme ?? Theme.of(context).bottomSheetTheme;
-    // By definition, the bottom sheet is aligned to the bottom of the page
+    // By definition, the bottom sheet is aligned to the bottom of the bpage
     // and isn't exposed to the top padding of the MediaQuery.
     Widget bottomSheet = MediaQuery.removePadding(
       context: context,

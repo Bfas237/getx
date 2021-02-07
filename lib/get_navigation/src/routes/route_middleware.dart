@@ -18,7 +18,7 @@ abstract class _RouteMiddleware {
   /// {@end-tool}
   int priority;
 
-  /// This function will be called when the page of
+  /// This function will be called when the bpage of
   /// the called route is being searched for.
   /// It take RouteSettings as a result an redirect to the new settings or
   /// give it null and there will be no redirecting.
@@ -32,20 +32,20 @@ abstract class _RouteMiddleware {
   /// {@end-tool}
   RouteSettings redirect(String route);
 
-  /// This function will be called when this Page is called
-  /// you can use it to change something about the page or give it new page
+  /// This function will be called when this bpage is called
+  /// you can use it to change something about the bpage or give it new bpage
   /// {@tool snippet}
   /// ```dart
-  /// GetPage onPageCalled(GetPage page) {
+  /// GetPage onPageCalled(GetPage bpage) {
   ///   final authService = Get.find<AuthService>();
-  ///   return page.copyWith(title: 'Wellcome ${authService.UserName}');
+  ///   return bpage.copyWith(title: 'Wellcome ${authService.UserName}');
   /// }
   /// ```
   /// {@end-tool}
-  GetPage onPageCalled(GetPage page);
+  GetPage onPageCalled(GetPage bpage);
 
   /// This function will be called right before the [Bindings] are initialize.
-  /// Here you can change [Bindings] for this page
+  /// Here you can change [Bindings] for this bpage
   /// {@tool snippet}
   /// ```dart
   /// List<Bindings> onBindingsStart(List<Bindings> bindings) {
@@ -60,17 +60,17 @@ abstract class _RouteMiddleware {
   List<Bindings> onBindingsStart(List<Bindings> bindings);
 
   /// This function will be called right after the [Bindings] are initialize.
-  GetPageBuilder onPageBuildStart(GetPageBuilder page);
+  GetPageBuilder onPageBuildStart(GetPageBuilder bpage);
 
   /// This function will be called right after the
-  /// GetPage.page function is called and will give you the result
+  /// GetPage.bpage function is called and will give you the result
   /// of the function. and take the widget that will be showed.
-  Widget onPageBuilt(Widget page);
+  Widget onPageBuilt(Widget bpage);
 
   void onPageDispose();
 }
 
-/// The Page Middlewares.
+/// The bpage Middlewares.
 /// The Functions will be called in this order
 /// (( [redirect] -> [onPageCalled] -> [onBindingsStart] ->
 /// [onPageBuildStart] -> [onPageBuilt] -> [onPageDispose] ))
@@ -84,16 +84,16 @@ class GetMiddleware implements _RouteMiddleware {
   RouteSettings redirect(String route) => null;
 
   @override
-  GetPage onPageCalled(GetPage page) => page;
+  GetPage onPageCalled(GetPage bpage) => bpage;
 
   @override
   List<Bindings> onBindingsStart(List<Bindings> bindings) => bindings;
 
   @override
-  GetPageBuilder onPageBuildStart(GetPageBuilder page) => page;
+  GetPageBuilder onPageBuildStart(GetPageBuilder bpage) => bpage;
 
   @override
-  Widget onPageBuilt(Widget page) => page;
+  Widget onPageBuilt(Widget bpage) => bpage;
 
   @override
   void onPageDispose() {}
@@ -112,11 +112,11 @@ class MiddlewareRunner {
     return <GetMiddleware>[];
   }
 
-  GetPage runOnPageCalled(GetPage page) {
+  GetPage runOnPageCalled(GetPage bpage) {
     _getMiddlewares().forEach((element) {
-      page = element.onPageCalled(page);
+      bpage = element.onPageCalled(bpage);
     });
-    return page;
+    return bpage;
   }
 
   RouteSettings runRedirect(String route) {
@@ -137,18 +137,18 @@ class MiddlewareRunner {
     return bindings;
   }
 
-  GetPageBuilder runOnPageBuildStart(GetPageBuilder page) {
+  GetPageBuilder runOnPageBuildStart(GetPageBuilder bpage) {
     _getMiddlewares().forEach((element) {
-      page = element.onPageBuildStart(page);
+      bpage = element.onPageBuildStart(bpage);
     });
-    return page;
+    return bpage;
   }
 
-  Widget runOnPageBuilt(Widget page) {
+  Widget runOnPageBuilt(Widget bpage) {
     _getMiddlewares().forEach((element) {
-      page = element.onPageBuilt(page);
+      bpage = element.onPageBuilt(bpage);
     });
-    return page;
+    return bpage;
   }
 
   void runOnPageDispose() =>
@@ -165,11 +165,11 @@ class PageRedirect {
       {this.isUnknown = false, this.route});
 
   // redirect all pages that needes redirecting
-  GetPageRoute page() {
+  GetPageRoute bpage() {
     while (needRecheck()) {}
     return isUnknown
         ? GetPageRoute(
-            page: unknownRoute.page,
+            bpage: unknownRoute.bpage,
             parameter: unknownRoute.parameter,
             settings: RouteSettings(
                 name: settings.name, arguments: settings.arguments),
@@ -186,7 +186,7 @@ class PageRedirect {
             middlewares: unknownRoute.middlewares,
           )
         : GetPageRoute(
-            page: route.page,
+            bpage: route.bpage,
             parameter: route.parameter,
             settings: RouteSettings(
                 name: settings.name, arguments: settings.arguments),

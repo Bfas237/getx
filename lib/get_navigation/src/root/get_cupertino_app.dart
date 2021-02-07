@@ -188,11 +188,11 @@ class GetCupertinoApp extends StatelessWidget {
         super(key: key);
 
   Route<dynamic> generator(RouteSettings settings) {
-    return PageRedirect(settings, unknownRoute).page();
+    return PageRedirect(settings, unknownRoute).bpage();
   }
 
   List<Route<dynamic>> initialRoutesGenerate(String name) =>
-      [PageRedirect(RouteSettings(name: name), unknownRoute).page()];
+      [PageRedirect(RouteSettings(name: name), unknownRoute).bpage()];
 
   @override
   Widget build(BuildContext context) => GetBuilder<GetMaterialController>(

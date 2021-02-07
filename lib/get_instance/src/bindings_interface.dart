@@ -17,7 +17,7 @@ abstract class Bindings {
 /// ```
 /// GetPage(
 ///   name: '/',
-///   page: () => Home(),
+///   bpage: () => Home(),
 ///   // This might cause you an error.
 ///   // binding: BindingsBuilder(() => Get.put(HomeController())),
 ///   binding: BindingsBuilder(() { Get.put(HomeController(); })),
@@ -37,7 +37,7 @@ class BindingsBuilder<T> extends Bindings {
   /// ```
   /// GetPage(
   ///   name: '/',
-  ///   page: () => Home(),
+  ///   bpage: () => Home(),
   ///   binding: BindingsBuilder.put(() => HomeController()),
   /// ),
   /// ```

@@ -13,7 +13,7 @@ class PathDecoded {
 
 class GetPage {
   final String name;
-  final GetPageBuilder page;
+  final GetPageBuilder bpage;
   final bool popGesture;
   final Map<String, String> parameter;
   final String title;
@@ -34,7 +34,7 @@ class GetPage {
 
   GetPage({
     @required this.name,
-    @required this.page,
+    @required this.bpage,
     this.title,
     this.settings,
     this.maintainState = true,
@@ -52,7 +52,7 @@ class GetPage {
     this.children,
     this.middlewares,
   })  : path = _nameToRegex(name),
-        assert(page != null),
+        assert(bpage != null),
         assert(name != null),
         assert(maintainState != null),
         assert(fullscreenDialog != null);
@@ -80,7 +80,7 @@ class GetPage {
 
   GetPage copyWith({
     String name,
-    GetPageBuilder page,
+    GetPageBuilder bpage,
     bool popGesture,
     Map<String, String> parameter,
     String title,
@@ -100,7 +100,7 @@ class GetPage {
   }) {
     return GetPage(
       name: name ?? this.name,
-      page: page ?? this.page,
+      bpage: bpage ?? this.bpage,
       popGesture: popGesture ?? this.popGesture,
       parameter: parameter ?? this.parameter,
       title: title ?? this.title,

@@ -26,7 +26,7 @@ class GetPageRoute<T> extends PageRoute<T> {
     this.binding,
     this.bindings,
     this.routeName,
-    this.page,
+    this.bpage,
     this.barrierLabel,
     this.maintainState = true,
     bool fullscreenDialog = false,
@@ -35,13 +35,13 @@ class GetPageRoute<T> extends PageRoute<T> {
         assert(barrierDismissible != null),
         assert(maintainState != null),
         assert(fullscreenDialog != null),
-        reference = "$routeName: ${page.hashCode}",
+        reference = "$routeName: ${bpage.hashCode}",
         super(settings: settings, fullscreenDialog: fullscreenDialog);
 
   @override
   final Duration transitionDuration;
 
-  final GetPageBuilder page;
+  final GetPageBuilder bpage;
 
   final String routeName;
 
@@ -129,7 +129,7 @@ class GetPageRoute<T> extends PageRoute<T> {
       }
     }
 
-    final pageToBuild = middlewareRunner.runOnPageBuildStart(page);
+    final pageToBuild = middlewareRunner.runOnPageBuildStart(bpage);
     return middlewareRunner.runOnPageBuilt(pageToBuild());
   }
 
@@ -406,8 +406,8 @@ const double _kBackGestureWidth = 20.0;
 const double _kMinFlingVelocity = 1.0;
 const int _kMaxDroppedSwipePageForwardAnimationTime = 800; // Milliseconds.
 
-// The maximum time for a page to get reset to it's original position if the
-// user releases a page mid swipe.
+// The maximum time for a bpage to get reset to it's original position if the
+// user releases a bpage mid swipe.
 const int _kMaxPageBackAnimationTime = 300;
 
 class _CupertinoBackGestureDetector<T> extends StatefulWidget {
@@ -561,8 +561,8 @@ class _CupertinoBackGestureController<T> {
     const Curve animationCurve = Curves.fastLinearToSlowEaseIn;
     bool animateForward;
 
-    // If the user releases the page before mid screen with sufficient velocity,
-    // or after mid screen, we should animate the page out. Otherwise, the page
+    // If the user releases the bpage before mid screen with sufficient velocity,
+    // or after mid screen, we should animate the bpage out. Otherwise, the bpage
     // should be animated back in.
     if (velocity.abs() >= _kMinFlingVelocity) {
       animateForward = velocity <= 0;
@@ -608,7 +608,7 @@ class _CupertinoBackGestureController<T> {
 
     if (controller.isAnimating) {
       // Keep the userGestureInProgress in true state so we don't change the
-      // curve of the page transition mid-flight since CupertinoPageTransition
+      // curve of the bpage transition mid-flight since CupertinoPageTransition
       // depends on userGestureInProgress.
       AnimationStatusListener animationStatusCallback;
       animationStatusCallback = (status) {

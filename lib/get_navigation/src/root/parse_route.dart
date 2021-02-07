@@ -30,9 +30,9 @@ class ParseRouteTree {
   void addRoute(GetPage route) {
     _routes.add(route);
 
-    // Add Page children.
-    for (var page in _flattenPage(route)) {
-      addRoute(page);
+    // Add bpage children.
+    for (var bpage in _flattenPage(route)) {
+      addRoute(bpage);
     }
   }
 
@@ -43,13 +43,13 @@ class ParseRouteTree {
     }
 
     final parentPath = route.name;
-    for (var page in route.children) {
+    for (var bpage in route.children) {
       // Add Parent middlewares to children
-      final pageMiddlewares = page.middlewares ?? <GetMiddleware>[];
+      final pageMiddlewares = bpage.middlewares ?? <GetMiddleware>[];
       pageMiddlewares.addAll(route.middlewares ?? <GetMiddleware>[]);
-      result.add(_addChild(page, parentPath, pageMiddlewares));
+      result.add(_addChild(bpage, parentPath, pageMiddlewares));
 
-      final children = _flattenPage(page);
+      final children = _flattenPage(bpage);
       for (var child in children) {
         pageMiddlewares.addAll(child.middlewares ?? <GetMiddleware>[]);
         result.add(_addChild(child, parentPath, pageMiddlewares));
@@ -63,7 +63,7 @@ class ParseRouteTree {
           GetPage origin, String parentPath, List<GetMiddleware> middlewares) =>
       GetPage(
         name: parentPath + origin.name,
-        page: origin.page,
+        bpage: origin.bpage,
         title: origin.title,
         alignment: origin.alignment,
         transition: origin.transition,

@@ -463,7 +463,7 @@ extension ExtensionBottomSheet on GetInterface {
 extension GetNavigation on GetInterface {
   /// **Navigation.push()** shortcut.<br><br>
   ///
-  /// Pushes a new [page] to the stack
+  /// Pushes a new [bpage] to the stack
   ///
   /// It has the advantage of not needing context,
   /// so you can call from your business logic
@@ -486,7 +486,7 @@ extension GetNavigation on GetInterface {
   /// By default, GetX will prevent you from push a route that you already in,
   /// if you want to push anyway, set [preventDuplicates] to false
   Future<T> to<T>(
-    Widget page, {
+    Widget bpage, {
     bool opaque,
     Transition transition,
     Curve curve,
@@ -498,14 +498,14 @@ extension GetNavigation on GetInterface {
     bool preventDuplicates = true,
     bool popGesture,
   }) {
-    var routeName = "/${page.runtimeType.toString()}";
+    var routeName = "/${bpage.runtimeType.toString()}";
     if (preventDuplicates && routeName == currentRoute) {
       return null;
     }
     return global(id)?.currentState?.push<T>(
           GetPageRoute<T>(
             opaque: opaque ?? true,
-            page: () => page,
+            bpage: () => bpage,
             routeName: routeName,
             settings: RouteSettings(
               //  name: forceRouteName ? '${a.runtimeType}' : '',
@@ -523,7 +523,7 @@ extension GetNavigation on GetInterface {
 
   /// **Navigation.pushNamed()** shortcut.<br><br>
   ///
-  /// Pushes a new named [page] to the stack.
+  /// Pushes a new named [bpage] to the stack.
   ///
   /// It has the advantage of not needing context, so you can call
   /// from your business logic.
@@ -538,20 +538,20 @@ extension GetNavigation on GetInterface {
   ///
   /// Note: Always put a slash on the route ('/page1'), to avoid unnexpected errors
   Future<T> toNamed<T>(
-    String page, {
+    String bpage, {
     dynamic arguments,
     int id,
     bool preventDuplicates = true,
   }) {
-    if (preventDuplicates && page == currentRoute) {
+    if (preventDuplicates && bpage == currentRoute) {
       return null;
     }
-    return global(id)?.currentState?.pushNamed<T>(page, arguments: arguments);
+    return global(id)?.currentState?.pushNamed<T>(bpage, arguments: arguments);
   }
 
   /// **Navigation.pushReplacementNamed()** shortcut.<br><br>
   ///
-  /// Pop the current named [page] in the stack and push a new one in its place
+  /// Pop the current named [bpage] in the stack and push a new one in its place
   ///
   /// It has the advantage of not needing context, so you can call
   /// from your business logic.
@@ -566,17 +566,17 @@ extension GetNavigation on GetInterface {
   ///
   /// Note: Always put a slash on the route ('/page1'), to avoid unnexpected errors
   Future<T> offNamed<T>(
-    String page, {
+    String bpage, {
     dynamic arguments,
     int id,
     bool preventDuplicates = true,
   }) {
-    if (preventDuplicates && page == currentRoute) {
+    if (preventDuplicates && bpage == currentRoute) {
       return null;
     }
     return global(id)
         ?.currentState
-        ?.pushReplacementNamed(page, arguments: arguments);
+        ?.pushReplacementNamed(bpage, arguments: arguments);
   }
 
   /// **Navigation.popUntil()** shortcut.<br><br>
@@ -587,7 +587,7 @@ extension GetNavigation on GetInterface {
   /// as explained in documentation
   ///
   /// [predicate] can be used like this:
-  /// `Get.until((route) => Get.currentRoute == '/home')`so when you get to home page,
+  /// `Get.until((route) => Get.currentRoute == '/home')`so when you get to home bpage,
   ///
   /// or also like this:
   /// `Get.until((route) => !Get.isDialogOpen())`, to make sure the
@@ -600,31 +600,31 @@ extension GetNavigation on GetInterface {
 
   /// **Navigation.pushAndRemoveUntil()** shortcut.<br><br>
   ///
-  /// Push the given [page], and then pop several pages in the stack until
+  /// Push the given [bpage], and then pop several pages in the stack until
   /// [predicate] returns true
   ///
   /// [id] is for when you are using nested navigation,
   /// as explained in documentation
   ///
   /// Obs: unlike other get methods, this one you need to send a function
-  /// that returns the widget to the page argument, like this:
-  /// Get.offUntil(GetPageRoute(page: () => HomePage()), predicate)
+  /// that returns the widget to the bpage argument, like this:
+  /// Get.offUntil(GetPageRoute(bpage: () => HomePage()), predicate)
   ///
   /// [predicate] can be used like this:
-  /// `Get.offUntil(page, (route) => (route as GetPageRoute).routeName == '/home')`
+  /// `Get.offUntil(bpage, (route) => (route as GetPageRoute).routeName == '/home')`
   /// to pop routes in stack until home,
   /// or also like this:
   /// `Get.until((route) => !Get.isDialogOpen())`, to make sure the dialog
   /// is closed
-  Future<T> offUntil<T>(Route<T> page, RoutePredicate predicate, {int id}) {
+  Future<T> offUntil<T>(Route<T> bpage, RoutePredicate predicate, {int id}) {
     // if (key.currentState.mounted) // add this if appear problems on future with route navigate
     // when widget don't mounted
-    return global(id)?.currentState?.pushAndRemoveUntil<T>(page, predicate);
+    return global(id)?.currentState?.pushAndRemoveUntil<T>(bpage, predicate);
   }
 
   /// **Navigation.pushNamedAndRemoveUntil()** shortcut.<br><br>
   ///
-  /// Push the given named [page], and then pop several pages in the stack
+  /// Push the given named [bpage], and then pop several pages in the stack
   /// until [predicate] returns true
   ///
   /// You can send any type of value to the other route in the [arguments].
@@ -633,7 +633,7 @@ extension GetNavigation on GetInterface {
   /// as explained in documentation
   ///
   /// [predicate] can be used like this:
-  /// `Get.offNamedUntil(page, ModalRoute.withName('/home'))`
+  /// `Get.offNamedUntil(bpage, ModalRoute.withName('/home'))`
   /// to pop routes in stack until home,
   /// or like this:
   /// `Get.offNamedUntil((route) => !Get.isDialogOpen())`,
@@ -641,36 +641,36 @@ extension GetNavigation on GetInterface {
   ///
   /// Note: Always put a slash on the route name ('/page1'), to avoid unexpected errors
   Future<T> offNamedUntil<T>(
-    String page,
+    String bpage,
     RoutePredicate predicate, {
     int id,
     dynamic arguments,
   }) {
     return global(id)
         ?.currentState
-        ?.pushNamedAndRemoveUntil<T>(page, predicate, arguments: arguments);
+        ?.pushNamedAndRemoveUntil<T>(bpage, predicate, arguments: arguments);
   }
 
   /// **Navigation.popAndPushNamed()** shortcut.<br><br>
   ///
-  /// Pop the current named page and pushes a new [page] to the stack
+  /// Pop the current named bpage and pushes a new [bpage] to the stack
   /// in its place
   ///
   /// You can send any type of value to the other route in the [arguments].
   /// It is very similar to `offNamed()` but use a different approach
   ///
-  /// The `offNamed()` pop a page, and goes to the next. The
-  /// `offAndToNamed()` goes to the next page, and removes the previous one.
+  /// The `offNamed()` pop a bpage, and goes to the next. The
+  /// `offAndToNamed()` goes to the next bpage, and removes the previous one.
   /// The route transition animation is different.
   Future<T> offAndToNamed<T>(
-    String page, {
+    String bpage, {
     dynamic arguments,
     int id,
     dynamic result,
   }) {
     return global(id)
         ?.currentState
-        ?.popAndPushNamed(page, arguments: arguments, result: result);
+        ?.popAndPushNamed(bpage, arguments: arguments, result: result);
   }
 
   /// **Navigation.removeRoute()** shortcut.<br><br>
@@ -685,7 +685,7 @@ extension GetNavigation on GetInterface {
 
   /// **Navigation.pushNamedAndRemoveUntil()** shortcut.<br><br>
   ///
-  /// Push a named [page] and pop several pages in the stack
+  /// Push a named [bpage] and pop several pages in the stack
   /// until [predicate] returns true. [predicate] is optional
   ///
   /// It has the advantage of not needing context, so you can
@@ -694,7 +694,7 @@ extension GetNavigation on GetInterface {
   /// You can send any type of value to the other route in the [arguments].
   ///
   /// [predicate] can be used like this:
-  /// `Get.until((route) => Get.currentRoute == '/home')`so when you get to home page,
+  /// `Get.until((route) => Get.currentRoute == '/home')`so when you get to home bpage,
   /// or also like
   /// `Get.until((route) => !Get.isDialogOpen())`, to make sure the dialog
   /// is closed
@@ -726,10 +726,10 @@ extension GetNavigation on GetInterface {
 
   /// **Navigation.popUntil()** shortcut.<br><br>
   ///
-  /// Pop the current page, snackbar, dialog or bottomsheet in the stack
+  /// Pop the current bpage, snackbar, dialog or bottomsheet in the stack
   ///
   /// if your set [closeOverlays] to true, Get.back() will close the
-  /// currently open snackbar/dialog/bottomsheet AND the current page
+  /// currently open snackbar/dialog/bottomsheet AND the current bpage
   ///
   /// [id] is for when you are using nested navigation,
   /// as explained in documentation
@@ -774,7 +774,7 @@ extension GetNavigation on GetInterface {
 
   /// **Navigation.pushReplacement()** shortcut .<br><br>
   ///
-  /// Pop the current page and pushes a new [page] to the stack
+  /// Pop the current bpage and pushes a new [bpage] to the stack
   ///
   /// It has the advantage of not needing context,
   /// so you can call from your business logic
@@ -798,7 +798,7 @@ extension GetNavigation on GetInterface {
   /// By default, GetX will prevent you from push a route that you already in,
   /// if you want to push anyway, set [preventDuplicates] to false
   Future<T> off<T>(
-    Widget page, {
+    Widget bpage, {
     bool opaque = false,
     Transition transition,
     Curve curve,
@@ -810,13 +810,13 @@ extension GetNavigation on GetInterface {
     bool preventDuplicates = true,
     Duration duration,
   }) {
-    var routeName = "/${page.runtimeType.toString()}";
+    var routeName = "/${bpage.runtimeType.toString()}";
     if (preventDuplicates && routeName == currentRoute) {
       return null;
     }
     return global(id)?.currentState?.pushReplacement(GetPageRoute(
         opaque: opaque ?? true,
-        page: () => page,
+        bpage: () => bpage,
         binding: binding,
         settings: RouteSettings(arguments: arguments),
         routeName: routeName,
@@ -829,7 +829,7 @@ extension GetNavigation on GetInterface {
 
   /// **Navigation.pushAndRemoveUntil()** shortcut .<br><br>
   ///
-  /// Push a [page] and pop several pages in the stack
+  /// Push a [bpage] and pop several pages in the stack
   /// until [predicate] returns true. [predicate] is optional
   ///
   /// It has the advantage of not needing context,
@@ -843,7 +843,7 @@ extension GetNavigation on GetInterface {
   /// as a [fullscreenDialog],
   ///
   /// [predicate] can be used like this:
-  /// `Get.until((route) => Get.currentRoute == '/home')`so when you get to home page,
+  /// `Get.until((route) => Get.currentRoute == '/home')`so when you get to home bpage,
   /// or also like
   /// `Get.until((route) => !Get.isDialogOpen())`, to make sure the dialog
   /// is closed
@@ -859,7 +859,7 @@ extension GetNavigation on GetInterface {
   /// By default, GetX will prevent you from push a route that you already in,
   /// if you want to push anyway, set [preventDuplicates] to false
   Future<T> offAll<T>(
-    Widget page, {
+    Widget bpage, {
     RoutePredicate predicate,
     bool opaque = false,
     bool popGesture,
@@ -871,13 +871,13 @@ extension GetNavigation on GetInterface {
     Curve curve,
     Duration duration,
   }) {
-    var routeName = "/${page.runtimeType.toString()}";
+    var routeName = "/${bpage.runtimeType.toString()}";
 
     return global(id)?.currentState?.pushAndRemoveUntil<T>(
         GetPageRoute<T>(
           opaque: opaque ?? true,
           popGesture: popGesture ?? defaultPopGesture,
-          page: () => page,
+          bpage: () => bpage,
           binding: binding,
           settings: RouteSettings(arguments: arguments),
           fullscreenDialog: fullscreenDialog,
@@ -1003,8 +1003,8 @@ extension GetNavigation on GetInterface {
   }
 
   @Deprecated('''
-Since version 2.8 it is possible to access the properties 
-[Get.arguments] and [Get.currentRoute] directly. 
+Since version 2.8 it is possible to access the properties
+[Get.arguments] and [Get.currentRoute] directly.
 [routeSettings] is useless and should not be used.''')
   RouteSettings get routeSettings => null;
 
