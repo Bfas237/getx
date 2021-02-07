@@ -83,14 +83,14 @@ class ParseRouteTree {
 
   GetPage _findRoute(String name) {
     return _routes.firstWhere(
-      (route) => route.path.regex.hasMatch(name),
+      (route) => route.path.regexb.hasMatch(name),
       orElse: () => null,
     );
   }
 
   Map<String, String> _parseParams(String path, PathDecoded routePath) {
     final params = <String, String>{};
-    Match paramsMatch = routePath.regex.firstMatch(path);
+    Match paramsMatch = routePath.regexb.firstMatch(path);
 
     for (var i = 0; i < routePath.keys.length; i++) {
       var param = Uri.decodeQueryComponent(paramsMatch[i + 1]);

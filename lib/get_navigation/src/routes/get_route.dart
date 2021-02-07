@@ -6,8 +6,8 @@ import 'custom_transition.dart';
 import 'transitions_type.dart';
 
 class PathDecoded {
-  const PathDecoded(this.regex, this.keys);
-  final RegExp regex;
+  const PathDecoded(this.regexb, this.keys);
+  final RegExp regexb;
   final List<String> keys;
 }
 
